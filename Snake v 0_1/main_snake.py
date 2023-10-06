@@ -6,6 +6,8 @@ screenHeight = 1080
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Snake game v2")
 
+# mainSurface = pygame.Surface((screenWidth, screenHeight))
+
 blocks = []
 
 
@@ -16,8 +18,7 @@ while running:
             running = False
 
     for obj in blocks:
-        obj.draw()
-
+        screen.blit(obj, obj.get_main_corner())
     pygame.display.update()
 
 pygame.quit()
