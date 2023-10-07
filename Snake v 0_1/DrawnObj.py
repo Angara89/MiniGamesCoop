@@ -4,10 +4,10 @@ from block import Block
 
 class DrawnObj:
 	
-	def __init__(self, width, height, anchorPoint, block):
-		self.width = width
-		self.height = height
-		self.anchorPoint = anchorPoint
+	def __init__(self,  block: Block):
+		self.width = block.width
+		self.height = block.height
+		self.anchorPoint = (0, 0)
 		self.block = block
 	
 	def draw(self):
