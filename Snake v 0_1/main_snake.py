@@ -11,12 +11,18 @@ pygame.display.set_caption("Snake game v2")
 
 blocks = []
 mainBlock = block.Block((screenWidth - screenWidth/5), (screenHeight), anchorPoint=(0, 0))
+mainBlock.fill_color((255, 0, 0))
+
 blocks.append(mainBlock)
 
-infoBlock = block.Block((screenWidth/5), (screenHeight/5), anchorPoint=(screenWidth - screenWidth/5, 0))
+infoBlock = block.Block((screenWidth/5), (screenHeight - screenHeight/4), anchorPoint=(screenWidth - screenWidth/5, 0))
+infoBlock.fill_color((255, 255, 0))
+
 blocks.append(infoBlock)
 
-buttonBlock = block.Block((), (), anchorPoint=(0, 0))
+buttonBlock = block.Block((screenWidth/5), (screenHeight/4), anchorPoint=(screenWidth - screenWidth/5, screenHeight - screenHeight/4))
+buttonBlock.fill_color((255, 0, 255))
+
 blocks.append(buttonBlock)
 
 
@@ -26,8 +32,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    for obj in blocks:
-        screen.blit(obj, obj.get_main_corner())
+    for block in blocks:
+        screen.blit(block, block.get_main_corner())
     pygame.display.update()
 
 pygame.quit()

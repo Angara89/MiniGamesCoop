@@ -2,8 +2,8 @@ import pygame
 
 
 class Block(pygame.Surface):
-	def __init__(self, width, height, anchorPoint: tuple):
-		super().__init__(width, height)
+	def __init__(self, width: int, height: int, anchorPoint: tuple):
+		super().__init__((width, height))
 		self.width = width
 		self.height = height
 		self.anchorPoint = anchorPoint
@@ -17,3 +17,6 @@ class Block(pygame.Surface):
 	
 	def get_main_corner(self):
 		return self.anchorPoint
+
+	def fill_color(self, color: pygame.Color):
+		self.fill(color)
