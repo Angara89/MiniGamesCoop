@@ -3,7 +3,7 @@ import pygame.rect
 import DrawnObj
 import block
 
-PIXELCELL = 20
+PIXELCELL = 100
 
 
 class Field(DrawnObj.DrawnObj):
@@ -14,7 +14,6 @@ class Field(DrawnObj.DrawnObj):
 		self.snakes = []
 		self.allCellsInW = int(tblock.width / 20)
 		self.allCellsInH = int(tblock.height / 20)
-		
 		self.draw_border_rect()
 		tblock.myDrawnObj.append(self)
 	
@@ -31,20 +30,28 @@ class Field(DrawnObj.DrawnObj):
 		pygame.draw.rect(self.block, rectColor, rect, border_radius=20)
 		self.draw_cells()
 	
+		
+		
+	
 	def draw_cells(self):
 		rect = self.rectField
-		cellsSize = 50
-		indent = 5
-		for line in range(self.allCellsInW + 1):
+		cellsSize = PIXELCELL
+		indent = 10
+		rLeft = rect.left + indent
+		rRight = rect.right + indent
+		rTop = rect.top + indent
+		rBottom = rect.bottom + indent
+		for line in range(self.allCellsInW):
 			pygame.draw.line(self.block,
 			                 (255, 255, 255),
-			                 (rect.left + indent + line * cellsSize, rect.top + indent),
-			                 (rect.left - indent + line * cellsSize, rect.bottom - indent),
+			                 (rLeft + line * cellsSize, rTop),
+			                 (rLeft + line * cellsSize, rect.bottom - indent*2),
 			                 5)
 		
-		for line in range(self.allCellsInH + 1):
+		for line in range(self.allCellsInH):
 			pygame.draw.line(self.block,
-			                 (0, 255, 255),
-			                 (rect.top + indent + line * cellsSize, rect.left + indent),
-			                 (rect.top - indent + line * cellsSize, rect.right - indent),
+			                 (255, 255, 255),
+			                 (rLeft, rTop + line * cellsSize),
+			                 (rRight - indent*2, rTop + line * cellsSize),
 			                 5)
+		

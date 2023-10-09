@@ -17,11 +17,6 @@ field = Field.Field(mainBlock)
 
 
 
-
-
-
-
-
 blocks.append(mainBlock)
 
 infoBlock = block.Block((screenWidth/5), (screenHeight - screenHeight/4), anchorPoint=(screenWidth - screenWidth/5, 0))
