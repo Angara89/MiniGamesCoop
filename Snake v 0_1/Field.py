@@ -29,8 +29,6 @@ class Field(DrawnObj.DrawnObj):
 		rectColor = (100, 100, 100)
 		pygame.draw.rect(self.block, rectColor, rect, border_radius=20)
 		self.draw_cells()
-	
-		
 		
 	
 	def draw_cells(self):
