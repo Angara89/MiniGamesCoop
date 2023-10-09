@@ -51,20 +51,20 @@ while not game_over:
             elif event.key == pygame.K_DOWN:
                 varYChange = snakeBlock
                 varXChange = 0
-
+    
     if varX >= disWight or varX < 0 or varY >= disHeight or varY < 0:
         game_over = True
-
+    
     varX += varXChange
     varY += varYChange
     dis.fill(white)
     pygame.draw.rect(dis, blue, [varX, varY, snakeBlock, snakeBlock])
-
-
+    
     pygame.display.update()
     clock.tick(snakeSpeed)
 
 message("You lost", red)
-pygame.quit()
+pygame.display.update()
 time.sleep(2)
+pygame.quit()
 quit()
