@@ -1,13 +1,14 @@
 import pygame
 
 pygame.init()
-dis = pygame.display.set_mode((400, 300))
 
-pygame.display.set_caption('Snake by Stradivarius')
-
+white = (255, 255, 255)
 blue = (121, 197, 216)
 red = (181, 65, 111)
 
+dis = pygame.display.set_mode((800, 600))
+
+pygame.display.set_caption('Snake by Stradivarius')
 
 game_over = False
 
@@ -31,20 +32,21 @@ while not game_over:
                 varXChange = 10
                 varYChange = 0
             elif event.key == pygame.K_UP:
-                varXChange = -10
-                varYChange = 0
+                varYChange = -10
+                varXChange = 0
             elif event.key == pygame.K_DOWN:
-                varXChange = 10
-                varYChange = 0
+                varYChange = 10
+                varXChange = 0
 
-varX += varXChange
-varY += varYChange
-pygame.draw.rect(dis, blue, [varX, varY, 10, 10])
+    varX += varXChange
+    varY += varYChange
+    dis.fill(white)
+    pygame.draw.rect(dis, blue, [varX, varY, 100, 100])
 
 
-pygame.display.update()
+    pygame.display.update()
 
-clock.tick(30)
+    clock.tick(30)
 
 pygame.quit()
 quit()
