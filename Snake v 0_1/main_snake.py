@@ -36,7 +36,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+
     for block in blocks:
+        block.draw_all_DrawnObj()
         screen.blit(block, block.get_main_corner())
     pygame.display.update()
 

@@ -11,8 +11,10 @@ class Block(pygame.Surface):
 		self.anchorPoint = anchorPoint
 		self.myDrawnObj = []
 	
-	def draw(self):
-		pass
+	def draw_all_DrawnObj(self):
+		
+		for drawnObj in self.myDrawnObj:
+			drawnObj.draw()
 	
 	def add_new_DrawObj(self, drawnObj):
 		self.myDrawnObj.append(drawnObj)

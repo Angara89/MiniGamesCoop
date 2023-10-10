@@ -1,7 +1,7 @@
 import pygame
 from block import Block
 
-
+# TODO придумать как отображать все обьекты данного класса на своем блоке
 class DrawnObj:
 	
 	def __init__(self,  block: Block):
