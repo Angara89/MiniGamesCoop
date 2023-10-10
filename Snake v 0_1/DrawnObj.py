@@ -8,7 +8,7 @@ class DrawnObj:
 		self.width = block.width
 		self.height = block.height
 		self.anchorPoint = (0, 0)
-		self.block = block
+		self.myBlock = block
 	
 	def draw(self):
 		pass
