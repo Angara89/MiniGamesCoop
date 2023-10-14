@@ -19,7 +19,6 @@ class Field(DrawnObj.DrawnObj):
 		# присваеваем rect обьект в точке отступов,  шириной и длинной минус двойные отступы(так как отступы существуют с двух сторон
 		self.rectField = pygame.Rect(self.indent, self.indent, self.myBlock.width - (2 * self.indent), self.myBlock.height - (2 * self.indent))
 		pygame.draw.rect(self.myBlock, (255, 255, 255), self.rectField)
-		
 		self.quantityCellsX = 0
 		
 		while ((self.quantityCellsX + 1) * PIXEL_CELL < self.rectField.width): #пока число клеток умноженное на её размер меньше длинный поля
