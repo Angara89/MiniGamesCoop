@@ -12,9 +12,7 @@ class Apple(DrawnObj):
 		super().__init__(block, size, aPoint, path)
 		self.appleCoord = Coord(2,3) # TODO сделать рандомну генерацию координат
 		self.anchorPoint = field.get_new_anchorPoint_on_coordin(self.appleCoord)
-		self.myBlock.add_new_DrawObj(self)
-	def get_new_anchorPoint(self, coord: Coord):
-		indent = self.myBlock.anchorPoint
+		
 		
 	def draw(self):
 		super().draw()

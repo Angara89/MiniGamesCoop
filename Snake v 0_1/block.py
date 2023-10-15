@@ -10,7 +10,7 @@ class Block(pygame.Surface):
 	
 	def draw_all_DrawnObj(self):
 		for drawnObj in self.myDrawnObj:
-			self.blit(drawnObj.mySurface, drawnObj.anchorPoint)
+			self.blit(drawnObj.thisSurface, drawnObj.anchorPoint)
 	
 	def add_new_DrawObj(self, drawnObj):
 		self.myDrawnObj.append(drawnObj)
