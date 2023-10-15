@@ -5,14 +5,18 @@ from block import Block
 # TODO придумать как отображать все обьекты данного класса на своем блоке
 class DrawnObj:
 	
-	def __init__(self, block: Block, size: tuple, aPoint: tuple, path: str):
+	def __init__(self, blockT, size: tuple = (-1, -1), aPoint: tuple = (0, 0), path: str = "___"):
+		if size[0] == -1 and size[1] == -1:
+			size = blockT.size
 		self.anchorPoint = aPoint
-		self.myBlock = block
+		self.myBlock = blockT
 		self.size = size
-		self.img = pygame.image.load(path) # TODO сделать загрузку изображение другого
-		self.img = pygame.transform.scale(self.img, self.size)
+		if path != "___":
+			self.img = pygame.image.load(path)  # TODO сделать загрузку изображение другого
+			self.img = pygame.transform.scale(self.img, self.size)
+		pygame.init()
 		self.mySurface = pygame.Surface(size)
-		self.myBlock.add_new_DrawObj(self.mySurface)
+		self.myBlock.add_new_DrawObj(self)
 	
 		
 	def draw(self):
