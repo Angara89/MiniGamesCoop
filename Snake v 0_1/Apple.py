@@ -4,6 +4,7 @@ from coord import Coord
 from Field import Field
 import block
 
+img = 0
 
 class Apple(DrawnObj):
 	
@@ -16,3 +17,5 @@ class Apple(DrawnObj):
 		
 	def draw(self):
 		super().draw()
+		
+	
