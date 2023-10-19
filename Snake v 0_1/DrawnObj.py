@@ -20,7 +20,6 @@ class DrawnObj:
 		self.myBlock.add_new_DrawObj(self)
 	
 		
-	def draw(self):
-		self.myBlock.blit(self.myBlock, self.anchorPoint)
+
 	
 	
