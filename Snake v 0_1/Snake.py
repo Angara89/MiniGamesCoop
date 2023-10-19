@@ -94,6 +94,7 @@ class Snake(DrawnObj):
 			self.thisSurface.blit(part_surface, self.get_new_anchorPoint(part))
 		
 		self.thisSurface.blit(tail_surface, self.get_new_anchorPoint(self.tail))
+		
 	
 	def change_direction(self, dir: str):
 		if (dir == "U" and self.direction == "D") or (dir == "D" and self.direction == "U"):

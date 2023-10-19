@@ -38,9 +38,11 @@ class Field(DrawnObj):
 		                            (self.quantityCellsX * self.PIXEL_CELL),
 		                            (self.quantityCellsY * self.PIXEL_CELL))
 		pygame.draw.rect(self.myBlock, (0, 255, 0), self.mainRect)
-		
+		self.thisSurface.fill((0, 255, 0))
 		from Snake import Snake
 		from Apple import Apple
+		
+		
 		
 		self.snake = Snake(self)
 		self.myBlock.add_new_DrawObj(self.snake)

@@ -35,7 +35,7 @@ pygame.display.set_caption("Snake game v2")
 
 blocks = []
 mainBlock = block.Block(((screenWidth - screenWidth/5), (screenHeight)), anchorPoint=(0, 0))
-mainBlock.fill_color((0, 255, 255))
+# mainBlock.fill_color((0, 255, 255))
 
 field = Field.Field(mainBlock)
 
