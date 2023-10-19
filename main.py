@@ -41,7 +41,7 @@ def message(msg, color):
     dis.blit(mesg, [disWight/6, disHeight/3])
     
 def gameLoop():
-    gameover = False
+    gameOver = False
     gameclose = False
     
     varx = disWight / 2
@@ -57,7 +57,7 @@ def gameLoop():
     foody = round(random.randrange(0, disWight - snakeblock) / 10) * 10
 
 
-    while not gameover:
+    while not gameOver:
     
         while gameclose == True:
             dis.fill(white)
@@ -67,14 +67,14 @@ def gameLoop():
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
-                        gameover = True
+                        gameOver = True
                         gameclose = False
                     if event.key == pygame.K_c:
                         gameLoop()
                 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameover = True
+                gameOver = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     varxchange = -snakeblock
