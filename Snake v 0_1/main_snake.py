@@ -35,7 +35,7 @@ mainBlock = block.Block(((screenWidth - screenWidth/5), (screenHeight)), anchorP
 mainBlock.fill_color(COLOR_RED)
 
 field = Field.Field(mainBlock)
-apple = Apple.Apple(field, (field.PIXEL_CELL, field.PIXEL_CELL), (0, 0),  imgApple)
+
 
 
 blocks.append(mainBlock)
@@ -65,7 +65,7 @@ while running:
 
     for block in blocks:
         block.draw_all_DrawnObj()
-        screen.blit(block, block.get_main_corner())
+        screen.blit(block, block.get_anchorPoint())
     pygame.display.update()
 
 pygame.quit()

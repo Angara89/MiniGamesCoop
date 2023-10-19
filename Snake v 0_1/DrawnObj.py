@@ -5,7 +5,7 @@ from block import Block
 # TODO придумать как отображать все обьекты данного класса на своем блоке
 class DrawnObj:
 	
-	def __init__(self, blockT, size: tuple, aPoint: tuple, path: str = "___"):
+	def __init__(self, blockT: Block, size: tuple, aPoint: tuple, path: str = "___"):
 		self.anchorPoint = aPoint
 		self.myBlock = blockT
 		self.size = size
