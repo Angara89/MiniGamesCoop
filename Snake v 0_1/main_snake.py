@@ -5,6 +5,9 @@ import pygame
 import DrawnObj
 import block
 import Apple
+import sys
+
+
 
 imgApple = r"material\apple_1.png"
 
@@ -32,18 +35,16 @@ pygame.display.set_caption("Snake game v2")
 
 blocks = []
 mainBlock = block.Block(((screenWidth - screenWidth/5), (screenHeight)), anchorPoint=(0, 0))
-mainBlock.fill_color(COLOR_RED)
+mainBlock.fill_color((0, 255, 255))
 
 field = Field.Field(mainBlock)
-
-
 
 blocks.append(mainBlock)
 
 
 
 infoBlock = block.Block(((screenWidth/5), (screenHeight - screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, 0))
-infoBlock.fill_color(COLOR_GREEN)
+infoBlock.fill_color(COLOR_RED)
 
 blocks.append(infoBlock)
 
@@ -54,18 +55,32 @@ buttonBlock.fill_color(COLOR_YELLOW)
 
 blocks.append(buttonBlock)
 
-
+clock = pygame.time.Clock()
 
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                field.snake.change_direction("L")
+            elif event.key == pygame.K_RIGHT:
+                field.snake.change_direction("R")
+            elif event.key == pygame.K_DOWN:
+                field.snake.change_direction("U")
+            elif event.key == pygame.K_UP:
+                field.snake.change_direction("D")
+                
+    field.snake.step_snake()
 
     for block in blocks:
         block.draw_all_DrawnObj()
         screen.blit(block, block.get_anchorPoint())
+        
     pygame.display.update()
+    
+    clock.tick(2)
 
 pygame.quit()
+sys.exit()

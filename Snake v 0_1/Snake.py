@@ -11,7 +11,8 @@ class Snake(DrawnObj):
 		self.direction = "U"
 		self.head = (int(self.myField.quantityCellsX/2), int(self.myField.quantityCellsY/2))
 		self.tail = (self.head[0], self.head[1] - 1)
-		self.parts = []
+		self.parts = [self.tail]
+		self.tail = (self.head[0], self.head[1] - 2)
 		PIXEL_CELL = self.myField.PIXEL_CELL
 		self.imgHead = pygame.image.load(r"material\snake_head.png")
 		self.imgHead = pygame.transform.scale(self.imgHead, (PIXEL_CELL, PIXEL_CELL))
@@ -21,6 +22,8 @@ class Snake(DrawnObj):
 		
 		self.imgTail = pygame.image.load(r"material\sneak_last_part.png")
 		self.imgTail = pygame.transform.scale(self.imgTail, (PIXEL_CELL, PIXEL_CELL))
+		
+		self.draw_snake()
 		
 	def eat_apple(self):
 		xChange = 0
@@ -41,7 +44,10 @@ class Snake(DrawnObj):
 		self.parts[0] = self.head
 
 		self.head = (self.head[0] + xChange, self.head[1] + yChange)
-		
+	
+	def step_snake(self):
+		self.move_snake()
+		self.draw_snake()
 	def move_snake(self):
 		
 		xChange = 0
@@ -63,13 +69,39 @@ class Snake(DrawnObj):
 
 		self.head = (self.head[0] + xChange, self.head[1] + yChange)
 		
+	# def draw_snake(self):
+	#
+	# 	self.thisSurface.blit(self.imgHead, self.get_new_anchorPoint(self.head))
+	#
+	# 	for part in self.parts:  # TODO корее всего тут он будет просто перерисовывать один part а новое место ПЕРЕДЕЛАТЬ
+	# 		self.thisSurface.blit(self.imgPart, self.get_new_anchorPoint(part))
+	#
+	# 	self.thisSurface.blit(self.imgTail, self.get_new_anchorPoint(self.tail))
+	
 	def draw_snake(self):
-		self.thisSurface.blit(self.imgHead, self.head)
+		# Создайте отдельные surface для каждой части змейки
+		head_surface = self.imgHead.convert_alpha()
+		part_surface = self.imgPart.convert_alpha()
+		tail_surface = self.imgTail.convert_alpha()
 		
-		for part in self.parts:  # TODO корее всего тут он будет просто перерисовывать один part а новое место ПЕРЕДЕЛАТЬ
-			self.thisSurface.blit(self.imgPart, part)
-			
-		self.thisSurface.blit(self.imgTail, self.imgTail)
+		# Очистите главную surface
+		self.thisSurface.fill((0, 0, 0, 0))
 		
+		# Рисуйте и перемещайте каждую часть змейки
+		self.thisSurface.blit(head_surface, self.get_new_anchorPoint(self.head))
+		
+		for part in self.parts:
+			self.thisSurface.blit(part_surface, self.get_new_anchorPoint(part))
+		
+		self.thisSurface.blit(tail_surface, self.get_new_anchorPoint(self.tail))
+	
 	def change_direction(self, dir: str):
-		self.direction = dir
+		if (dir == "U" and self.direction == "D") or (dir == "D" and self.direction == "U"):
+			pass
+		elif (dir == "R" and self.direction == "L") or (dir == "L" and self.direction == "R"):
+			pass
+		else:
+			self.direction = dir
+	
+	def get_new_anchorPoint(self, coord):
+		return ((self.myField.PIXEL_CELL * coord[0]), (self.myField.PIXEL_CELL * coord[1]))
