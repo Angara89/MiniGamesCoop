@@ -45,13 +45,15 @@ class Field(DrawnObj):
 		
 		
 		self.snake = Snake(self)
-		self.myBlock.add_new_DrawObj(self.snake)
 		
 		self.apple = Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png")
-		self.myBlock.add_new_DrawObj(self.apple)
-		
 
 		
+
+	def is_apple_eaten(self):
+		if (self.snake.head == self.apple.coord):
+			self.apple.apple_is_eaten()
+			self.snake.flagEatenApple = True
 
 	def get_new_anchorPoint_on_coord(self, coord):
 		return (self.mainRect.left + (self.PIXEL_CELL * coord[0]),

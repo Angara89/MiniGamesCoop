@@ -73,6 +73,7 @@ while running:
                 field.snake.change_direction("D")
                 
     field.snake.step_snake()
+    field.is_apple_eaten()
 
     for block in blocks:
         block.draw_all_DrawnObj()
@@ -80,7 +81,7 @@ while running:
         
     pygame.display.update()
     
-    clock.tick(2)
+    clock.tick(10)
 
 pygame.quit()
 sys.exit()

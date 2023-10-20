@@ -23,28 +23,33 @@ class Snake(DrawnObj):
 		self.imgTail = pygame.image.load(r"material\sneak_last_part.png")
 		self.imgTail = pygame.transform.scale(self.imgTail, (PIXEL_CELL, PIXEL_CELL))
 		
+		self.flagEatenApple = False
+		
 		self.draw_snake()
 		
-	def eat_apple(self):
-		xChange = 0
-		yChange = 0
-		if self.direction == "U":
-			yChange += 1
-		elif self.direction == "D":
-			yChange -= 1
-		elif self.direction == "R":
-			xChange += 1
-		elif self.direction == "L":
-			xChange -= 1
-		
-		self.parts.append((self.parts[-1][0], self.parts[-1][1]))
-		
-		for i in reversed(range(1, len(self.parts) - 1)):
-			self.parts[i] = self.parts[i - 1]
-		self.parts[0] = self.head
-
-		self.head = (self.head[0] + xChange, self.head[1] + yChange)
+	# def eat_apple(self):
+	# 	xChange = 0
+	# 	yChange = 0
+	# 	if self.direction == "U":
+	# 		yChange += 1
+	# 	elif self.direction == "D":
+	# 		yChange -= 1
+	# 	elif self.direction == "R":
+	# 		xChange += 1
+	# 	elif self.direction == "L":
+	# 		xChange -= 1
+	#
+	# 	self.parts.append((self.parts[-1][0], self.parts[-1][1]))
+	#
+	# 	for i in reversed(range(1, len(self.parts) - 1)):
+	# 		self.parts[i] = self.parts[i - 1]
+	# 	self.parts[0] = self.head
+	#
+	# 	self.head = (self.head[0] + xChange, self.head[1] + yChange)
 	
+	def eat_apple(self):
+		pass
+		
 	def step_snake(self):
 		self.move_snake()
 		self.draw_snake()
@@ -61,23 +66,18 @@ class Snake(DrawnObj):
 		elif self.direction == "L":
 			xChange -= 1
 
-		self.tail = self.parts[-1]
-
+		if self.flagEatenApple:
+			self.parts.append(self.tail)
+		else:
+			self.tail = self.parts[-1]
+		self.flagEatenApple = False
+		
 		for i in reversed(range(1, len(self.parts))):
 			self.parts[i] = self.parts[i - 1]
 		self.parts[0] = self.head
 
 		self.head = (self.head[0] + xChange, self.head[1] + yChange)
 		
-	# def draw_snake(self):
-	#
-	# 	self.thisSurface.blit(self.imgHead, self.get_new_anchorPoint(self.head))
-	#
-	# 	for part in self.parts:  # TODO корее всего тут он будет просто перерисовывать один part а новое место ПЕРЕДЕЛАТЬ
-	# 		self.thisSurface.blit(self.imgPart, self.get_new_anchorPoint(part))
-	#
-	# 	self.thisSurface.blit(self.imgTail, self.get_new_anchorPoint(self.tail))
-	
 	def draw_snake(self):
 		# Создайте отдельные surface для каждой части змейки
 		head_surface = self.imgHead.convert_alpha()
