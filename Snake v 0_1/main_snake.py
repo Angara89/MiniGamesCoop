@@ -74,7 +74,9 @@ while running:
                 
     field.snake.step_snake()
     field.is_apple_eaten()
-
+    if field.is_it_a_loss():
+        running = False
+        
     for block in blocks:
         block.draw_all_DrawnObj()
         screen.blit(block, block.get_anchorPoint())

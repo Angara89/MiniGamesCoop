@@ -23,5 +23,3 @@ class Block(pygame.Surface):
 
 	def fill_color(self, color):
 		self.fill(color)
-		
-		

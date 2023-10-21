@@ -39,6 +39,7 @@ class Field(DrawnObj):
 		                            (self.quantityCellsY * self.PIXEL_CELL))
 		pygame.draw.rect(self.myBlock, (0, 255, 0), self.mainRect)
 		self.thisSurface.fill((0, 255, 0))
+		self.create_background()
 		from Snake import Snake
 		from Apple import Apple
 		
@@ -48,7 +49,32 @@ class Field(DrawnObj):
 		
 		self.apple = Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png")
 
+	def is_it_a_loss(self):
+		if (self.snake.head[0] == -1 or self.snake.head[1] == -1 or
+			self.snake.head[0] == self.quantityCellsX or self.snake.head[1] == self.quantityCellsY):
+			return True
 		
+		for part in self.snake.parts:
+			if part == self.snake.head:
+				return True
+
+		return False
+		
+	def create_background(self):
+		self.background = DrawnObj(self.myBlock, self.mainRect.size, self.mainRect.topleft)
+		colorMain = (0, 200, 0)
+		colorSub = (100, 255, 0)
+		
+		x, y = 0, 0
+		for row in range(self.quantityCellsX):
+			for col in range(self.quantityCellsY):
+				x = row * self.PIXEL_CELL
+				y = col * self.PIXEL_CELL
+				color = colorMain if (row + col) % 2 == 0 else colorSub
+				pygame.draw.rect(self.background.thisSurface, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
+			
+	def get_new_anchorPoint_from_topLeft(self, coord):
+		return ((self.PIXEL_CELL * coord[0]), (self.PIXEL_CELL * coord[1]))
 
 	def is_apple_eaten(self):
 		if (self.snake.head == self.apple.coord):
