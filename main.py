@@ -16,6 +16,10 @@ disHeight = 600
 dis = pygame.display.set_mode((disWight, disHeight))
 pygame.display.set_caption('Snake by Stradivarius')
 
+from SurfaceSnake import Surface
+surface = Surface(800, 600)
+from SnakeBody import Body
+snake = Body(green, 10, 10)
 
 
 clock = pygame.time.Clock()

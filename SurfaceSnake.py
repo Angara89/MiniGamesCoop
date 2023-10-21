@@ -19,3 +19,4 @@ class Surface():
 	def printSurface(self):
 		for row in self.grid:
 			print("". join(str(cell) for cell in row))
+			
