@@ -35,13 +35,18 @@ scoreFont = pygame.font.SysFont("comicsans", 35)
 def ourSnake(snakeblock, snakelist):
     for x in snakelist:
         pygame.draw.rect(dis, black, [x[0], x[1], snakeblock, snakeblock])
+        
+from SurfaceSnake import Surface
+        
+surface = Surface(10, 10)
+
 
 def message(msg, color):
     mesg = fontStyle.render(msg, True, color)
     dis.blit(mesg, [disWight/6, disHeight/3])
     
 def gameLoop():
-    gameover = False
+    gameOver = False
     gameclose = False
     
     varx = disWight / 2
@@ -57,7 +62,7 @@ def gameLoop():
     foody = round(random.randrange(0, disWight - snakeblock) / 10) * 10
 
 
-    while not gameover:
+    while not gameOver:
     
         while gameclose == True:
             dis.fill(white)
@@ -67,18 +72,18 @@ def gameLoop():
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
-                        gameover = True
+                        gameOver = True
                         gameclose = False
                     if event.key == pygame.K_c:
                         gameLoop()
-                
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameover = True
+                game_over = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     varxchange = -snakeblock
-                    varychange = 0
+                    varychange= 0
                 elif event.key == pygame.K_RIGHT:
                     varxchange = snakeblock
                     varychange = 0
@@ -88,7 +93,7 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     varychange = snakeblock
                     varxchange = 0
-    
+        
         if varx >= disWight or varx < 0 or vary >= disHeight or vary < 0:
             gameclose = True
     
