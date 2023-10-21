@@ -38,7 +38,7 @@ class Field(DrawnObj):
 		                            (self.quantityCellsX * self.PIXEL_CELL),
 		                            (self.quantityCellsY * self.PIXEL_CELL))
 		pygame.draw.rect(self.myBlock, (0, 255, 0), self.mainRect)
-		self.thisSurface.fill((0, 255, 0))
+		self.thisSurface.fill((0, 100, 0))
 		self.create_background()
 		from Snake import Snake
 		from Apple import Apple
@@ -62,8 +62,9 @@ class Field(DrawnObj):
 		
 	def create_background(self):
 		self.background = DrawnObj(self.myBlock, self.mainRect.size, self.mainRect.topleft)
-		colorMain = (0, 200, 0)
-		colorSub = (100, 255, 0)
+		colorMain = (107, 157, 41)
+		# colorSub = (107, 157, 41)
+		colorSub = (83, 114, 43)
 		
 		x, y = 0, 0
 		for row in range(self.quantityCellsX):
