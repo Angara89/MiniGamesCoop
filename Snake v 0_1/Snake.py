@@ -14,13 +14,13 @@ class Snake(DrawnObj):
 		self.parts = [self.tail]
 		self.tail = (self.head[0], self.head[1] - 2)
 		PIXEL_CELL = self.myField.PIXEL_CELL
-		self.imgHead = pygame.image.load(r"material\snake_head.png")
+		self.imgHead = pygame.image.load(r"material\snake_head_2.png")
 		self.imgHead = pygame.transform.scale(self.imgHead, (PIXEL_CELL, PIXEL_CELL))
 		
-		self.imgPart = pygame.image.load(r"material\snake_part.png")
+		self.imgPart = pygame.image.load(r"material\snake_part_2.png")
 		self.imgPart = pygame.transform.scale(self.imgPart, (PIXEL_CELL, PIXEL_CELL))
 		
-		self.imgTail = pygame.image.load(r"material\sneak_last_part.png")
+		self.imgTail = pygame.image.load(r"material\sneak_last_part_2.png")
 		self.imgTail = pygame.transform.scale(self.imgTail, (PIXEL_CELL, PIXEL_CELL))
 		
 		self.flagEatenApple = False
@@ -47,8 +47,7 @@ class Snake(DrawnObj):
 	#
 	# 	self.head = (self.head[0] + xChange, self.head[1] + yChange)
 	
-	def eat_apple(self):
-		pass
+
 		
 	def step_snake(self):
 		self.move_snake()
