@@ -1,3 +1,5 @@
+import random
+import pygame
 class food:
 	import pygame
 	def __init__(self, food_color, wight, height):

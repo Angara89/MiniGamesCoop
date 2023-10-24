@@ -1,4 +1,5 @@
-
+import random
+import pygame
 class Body:
 	def __init__(self, field, x, y):
 		self.snake_head = [100, 50]
