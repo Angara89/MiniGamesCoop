@@ -41,13 +41,16 @@ def ourSnake(snakeblock, snakelist):
         pygame.draw.rect(dis, black, [x[0], x[1], snakeblock, snakeblock])
         
 from SurfaceSnake import Surface
+from Food import food
         
 surface = Surface(10, 10)
-
+Food = food(black, width, height)
 
 def message(msg, color):
     mesg = fontStyle.render(msg, True, color)
     dis.blit(mesg, [disWight/6, disHeight/3])
+    
+
     
 def gameLoop():
     gameOver = False
@@ -62,8 +65,6 @@ def gameLoop():
     snakelist = []
     lengthofsnake = 1
     
-    foodx = round(random.randrange(0, disWight - snakeblock) / 10) * 10
-    foody = round(random.randrange(0, disWight - snakeblock) / 10) * 10
 
 
     while not gameOver:
@@ -97,6 +98,9 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     varychange = snakeblock
                     varxchange = 0
+                    
+                    
+        food.foodPos = Body.body_mech(food.foodPos, )
         
         if varx >= disWight or varx < 0 or vary >= disHeight or vary < 0:
             gameclose = True

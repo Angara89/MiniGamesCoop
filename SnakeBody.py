@@ -8,13 +8,6 @@ class Body:
 		self.snakeColor = snakeColor
 		self.direction = "right"
 		self.change_to = self.direction
-		
-	def direction_move(self):
-		if any((self.change_to == "RIGHT" and not self.direction == "LEFT",
-				self.change_to == "LEFT" and not self.direction == "RIGHT",
-				self.change_to == "UP" and not self.direction == "DOWN",
-				self.change_to == "DOWN" and not self.direction == "UP")):
-			self.direction = self.change_to
 	
 	def change_head_position(self):
 		if self.direction == "RIGHT":
