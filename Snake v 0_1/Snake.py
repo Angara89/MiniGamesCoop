@@ -17,10 +17,10 @@ class Snake(DrawnObj):
 		self.imgHead = pygame.image.load(r"material\snake_head_2.png")
 		self.imgHead = pygame.transform.scale(self.imgHead, (PIXEL_CELL, PIXEL_CELL))
 		
-		self.imgPart = pygame.image.load(r"material\snake_part_2.png")
+		self.imgPart = pygame.image.load(r"material\snake_part_3.png")
 		self.imgPart = pygame.transform.scale(self.imgPart, (PIXEL_CELL, PIXEL_CELL))
 		
-		self.imgTail = pygame.image.load(r"material\sneak_last_part_2.png")
+		self.imgTail = pygame.image.load(r"material\snake_part_3.png")
 		self.imgTail = pygame.transform.scale(self.imgTail, (PIXEL_CELL, PIXEL_CELL))
 		
 		self.flagEatenApple = False

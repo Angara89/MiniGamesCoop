@@ -6,7 +6,7 @@ import DrawnObj
 import block
 import Apple
 import sys
-
+from stats import Stats
 COLOR_RED = pygame.Color(255, 0, 0)
 COLOR_GREEN = pygame.Color(0, 255, 0)
 COLOR_BLUE = pygame.Color(0, 0, 255)
@@ -31,15 +31,21 @@ field = Field.Field(mainBlock)
 blocks.append(mainBlock)
 
 infoBlock = block.Block(((screenWidth/5), (screenHeight - screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, 0))
-infoBlock.fill_color(COLOR_RED)
+stats = Stats(infoBlock, (infoBlock.size[0], infoBlock.size[1] / 100 * 5), (0, 0), "Snake1")
+# stats.thisSurface.fill(COLOR_LIGHT_GRAY)
+
+infoBlock.fill_color(COLOR_GRAY)
+
+
 blocks.append(infoBlock)
 
 buttonBlock = block.Block(((screenWidth/5), (screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, screenHeight - screenHeight/4))
 buttonBlock.fill_color(COLOR_YELLOW)
-blocks.append(buttonBlock)
+blocks.append(buttonBlock) 
 
 clock = pygame.time.Clock()
 running = True
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -53,7 +59,7 @@ while running:
                 field.snake.change_direction("U")
             elif event.key == pygame.K_UP:
                 field.snake.change_direction("D")
-                
+
     field.snake.step_snake()
     field.is_apple_eaten()
     if field.is_it_a_loss():
@@ -65,7 +71,7 @@ while running:
         
     pygame.display.update()
     
-    clock.tick(10)
+    clock.tick(5)
 
 pygame.quit()
 sys.exit()

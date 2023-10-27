@@ -11,7 +11,7 @@ class Field(DrawnObj):
 	
 	
 	def __init__(self, tBlock: Block):
-		self.PIXEL_CELL = 30
+		self.PIXEL_CELL = 60
 		super().__init__(tBlock, tBlock.size, (0, 0))
 		self.indent = int(self.myBlock.size[1] / 100)  # делаем отступы для рамки в 1 процент от высоты
 		# присваеваем rect обьект в точке отступов,  шириной и длинной минус двойные отступы(так как отступы существуют с двух сторон
