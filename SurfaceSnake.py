@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-class Surface():
+class Surface:
 	def __init__(self):
 		self.white = (255, 255, 255)
 		self.yellow = (255, 255, 102)
