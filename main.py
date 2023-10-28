@@ -3,21 +3,11 @@ import time
 import random
 
 pygame.init()
-
-white = (255, 255, 255)
-yellow = (255, 255, 102)
-blue = (121, 197, 216)
-red = (181, 65, 111)
-black = (0, 0, 0)
-green = (0, 255, 0)
-
-disWight = 800
-disHeight = 600
-dis = pygame.display.set_mode((disWight, disHeight))
 pygame.display.set_caption('Snake by Stradivarius')
 
 from SurfaceSnake import Surface
-surface = Surface(800, 600)
+
+surface = Surface()
 from SnakeBody import Body
 snake = Body(green, 10, 10)
 
