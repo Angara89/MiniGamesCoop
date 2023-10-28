@@ -1,6 +1,5 @@
 import pygame
 from DrawnObj import DrawnObj
-from coord import Coord
 from Field import Field
 import block
 import random

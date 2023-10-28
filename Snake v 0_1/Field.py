@@ -1,5 +1,4 @@
 import pygame.rect
-from coord import Coord
 from DrawnObj import DrawnObj
 from block import Block
 
@@ -47,7 +46,7 @@ class Field(DrawnObj):
 		
 		self.snake = Snake(self)
 		self.apples = []
-		for _ in range(100):
+		for _ in range(1):
 			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
 
 	def is_it_a_loss(self):

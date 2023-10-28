@@ -31,7 +31,7 @@ field = Field.Field(mainBlock)
 blocks.append(mainBlock)
 
 infoBlock = block.Block(((screenWidth/5), (screenHeight - screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, 0))
-stats = Stats(infoBlock, (infoBlock.size[0], infoBlock.size[1] / 100 * 5), (0, 0), "Snake1")
+stats = Stats(infoBlock, 1, "Snake1")
 
 infoBlock.fill_color(COLOR_GRAY)
 
