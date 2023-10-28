@@ -56,9 +56,9 @@ class Snake(DrawnObj):
 		
 		xChange = 0
 		yChange = 0
-		if self.direction == "U":
+		if self.direction == "D":
 			yChange += 1
-		elif self.direction == "D":
+		elif self.direction == "U":
 			yChange -= 1
 		elif self.direction == "R":
 			xChange += 1

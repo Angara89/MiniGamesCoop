@@ -46,8 +46,9 @@ class Field(DrawnObj):
 		
 		
 		self.snake = Snake(self)
-		
-		self.apple = Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png")
+		self.apples = []
+		for _ in range(100):
+			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
 
 	def is_it_a_loss(self):
 		if (self.snake.head[0] == -1 or self.snake.head[1] == -1 or
@@ -78,9 +79,10 @@ class Field(DrawnObj):
 		return ((self.PIXEL_CELL * coord[0]), (self.PIXEL_CELL * coord[1]))
 
 	def is_apple_eaten(self):
-		if (self.snake.head == self.apple.coord):
-			self.apple.apple_is_eaten()
-			self.snake.flagEatenApple = True
+		for apple in self.apples:
+			if (self.snake.head == apple.coord):
+				apple.apple_is_eaten()
+				self.snake.flagEatenApple = True
 
 	def get_new_anchorPoint_on_coord(self, coord):
 		return (self.mainRect.left + (self.PIXEL_CELL * coord[0]),

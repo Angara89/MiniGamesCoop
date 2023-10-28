@@ -32,7 +32,6 @@ blocks.append(mainBlock)
 
 infoBlock = block.Block(((screenWidth/5), (screenHeight - screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, 0))
 stats = Stats(infoBlock, (infoBlock.size[0], infoBlock.size[1] / 100 * 5), (0, 0), "Snake1")
-# stats.thisSurface.fill(COLOR_LIGHT_GRAY)
 
 infoBlock.fill_color(COLOR_GRAY)
 
@@ -45,21 +44,22 @@ blocks.append(buttonBlock)
 
 clock = pygame.time.Clock()
 running = True
-
+dir = "U"
 while running:
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                field.snake.change_direction("L")
-            elif event.key == pygame.K_RIGHT:
-                field.snake.change_direction("R")
-            elif event.key == pygame.K_DOWN:
-                field.snake.change_direction("U")
-            elif event.key == pygame.K_UP:
-                field.snake.change_direction("D")
-
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                dir = "L"
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                dir = "R"
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                dir = "D"
+            elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                dir = "U"
+    field.snake.change_direction(dir)
     field.snake.step_snake()
     field.is_apple_eaten()
     if field.is_it_a_loss():
@@ -71,7 +71,7 @@ while running:
         
     pygame.display.update()
     
-    clock.tick(5)
+    clock.tick(10)
 
 pygame.quit()
 sys.exit()

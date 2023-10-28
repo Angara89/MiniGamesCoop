@@ -12,7 +12,7 @@ class Stats(DrawnObj):
 		super().__init__(blockT, size, anchorPoint)
 		self.text = text
 		self.var = -1
-		self.myFont = pygame.font.Font(None, 80)
+		self.myFont = pygame.font.Font(None, int(size[1]))
 		self.color = (255, 0, 0)
 		self.indentText = (int(self.size[0] / 100 * 5), int(self.size[1] / 100 * 5))
 		self.print_text()
