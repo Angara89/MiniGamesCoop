@@ -7,16 +7,21 @@ import block
 import Apple
 import sys
 from stats import Stats
-COLOR_RED = pygame.Color(255, 0, 0)
-COLOR_GREEN = pygame.Color(0, 255, 0)
-COLOR_BLUE = pygame.Color(0, 0, 255)
-COLOR_YELLOW = pygame.Color(255, 255, 0)
-COLOR_MAGENTA = pygame.Color(255, 0, 255)
-COLOR_CYAN = pygame.Color(0, 255, 255)
-COLOR_BLACK = pygame.Color(0, 0, 0)
-COLOR_WHITE = pygame.Color(255, 255, 255)
-COLOR_GRAY = pygame.Color(128, 128, 128)
-COLOR_LIGHT_GRAY = pygame.Color(192, 192, 192)
+from stat_ import Stat
+
+
+
+
+COLOR_RED =(255, 0, 0)
+COLOR_GREEN = (0, 255, 0)
+COLOR_BLUE = (0, 0, 255)
+COLOR_YELLOW = (255, 255, 0)
+COLOR_MAGENTA = (255, 0, 255)
+COLOR_CYAN = (0, 255, 255)
+COLOR_BLACK = (0, 0, 0)
+COLOR_WHITE = (255, 255, 255)
+COLOR_GRAY = (128, 128, 128)
+COLOR_LIGHT_GRAY = (192, 192, 192)
 
 
 pygame.init()
@@ -34,8 +39,22 @@ field = Field.Field(mainBlock)
 blocks.append(mainBlock)
 
 infoBlock = Stats((screenWidth, hInfoBlock), anchorPoint=(0, 0))
-
-infoBlock.fill_color(COLOR_GRAY)
+nameMainText = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=8,
+                    text="Snake v0.2",
+                    textColor=COLOR_WHITE,
+                    sizeFont="mainFont",
+                    )
+levelText = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=5,
+                    text="level 1/01",
+                    textColor=COLOR_LIGHT_GRAY,
+                    sizeFont="miniFont",
+                    )
+infoBlock.fill_color((100, 0, 100))
+blocks.append(infoBlock)
 
 
 
