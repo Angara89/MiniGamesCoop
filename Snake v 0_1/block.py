@@ -9,8 +9,9 @@ class Block(pygame.Surface):
 		self.myDrawnObjs = []  # создаем список рисуемых обьектов
 	
 	def draw_all_DrawnObj(self):
-		if (len(self.myDrawnObjs) != 0):
-			self.fill((0, 0, 0, 0))
+		# if (len(self.myDrawnObjs) != 0):
+		# 	self.fill((0, 0, 0, 0))
+		self.fill((0, 0, 0, 0))
 		for drawnObj in self.myDrawnObjs:
 			self.blit(drawnObj.thisSurface, drawnObj.anchorPoint)
 

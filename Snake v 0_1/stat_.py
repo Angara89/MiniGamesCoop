@@ -69,18 +69,31 @@ class Stat(DrawnObj):
 				pass #  TODO написать загрузку и работу с пикчами
 			else:
 				raise Exception("ошибка в передаче параметров, передали что картинка есть но путь к ней не передали")
+		
+		
 		self.haveNumber = haveNumber
 		if (haveNumber == True):
 			self.number = number
 			
+			
+			
+			
 		Stat.xCommon += self.size[0]
+		self.thisSurface.fill((100, 100, 100))
+		self.print()
+	
+	def plus_my_number(self):
+		self.number += 1
 		self.print()
 			
 	def print(self):
-
+		thisText = self.text
+		if (self.haveNumber == True):
+			thisText = self.text + str(self.number)
+		
 		textAPoint = (Stat.indentFromLeft,
 		              self.size[1] - Stat.indentFromBottom - self.myFont.size("A")[1])
-		text = self.myFont.render(self.text, True, self.textColor)
-		self.thisSurface.fill((0, 0, 0, 0))
+		text = self.myFont.render(thisText, True, self.textColor)
 		# self.thisSurface.fill((0, 100, 255, 128))
+		self.thisSurface.fill((0 ,0, 0, 50))
 		self.thisSurface.blit(text, textAPoint)

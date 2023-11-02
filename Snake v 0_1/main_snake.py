@@ -49,11 +49,23 @@ nameMainText = Stat(stats=infoBlock,
 levelText = Stat(stats=infoBlock,
                     qIndent=1,
                     xSizeOnIndent=5,
-                    text="level 1/01",
+                    text=r"level 1/01",
                     textColor=COLOR_LIGHT_GRAY,
                     sizeFont="miniFont",
                     )
-infoBlock.fill_color((100, 0, 100))
+qBlockSnakeText = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=20,
+                    text=r"Size snake: ",
+                    textColor=COLOR_RED,
+                    sizeFont="mediumFont",
+                    number=3,
+                    haveNumber=True
+                    )
+field.add_stat_block_quantity_snake(qBlockSnakeText)
+
+
+# infoBlock.fill_color((100, 0, 100))
 blocks.append(infoBlock)
 
 
