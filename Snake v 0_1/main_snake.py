@@ -26,21 +26,18 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Snake game v2")
 blocks = []
 
-mainBlock = block.Block(((screenWidth - screenWidth/5), (screenHeight)), anchorPoint=(0, 0))
+hInfoBlock = int(screenHeight / 20)
+
+
+mainBlock = block.Block((screenWidth, screenHeight-hInfoBlock), anchorPoint=(0, hInfoBlock))
 field = Field.Field(mainBlock)
 blocks.append(mainBlock)
 
-infoBlock = block.Block(((screenWidth/5), (screenHeight - screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, 0))
-stats = Stats(infoBlock, 1, "Snake1")
+infoBlock = Stats((screenWidth, hInfoBlock), anchorPoint=(0, 0))
 
 infoBlock.fill_color(COLOR_GRAY)
 
 
-blocks.append(infoBlock)
-
-buttonBlock = block.Block(((screenWidth/5), (screenHeight/4)), anchorPoint=(screenWidth - screenWidth/5, screenHeight - screenHeight/4))
-buttonBlock.fill_color(COLOR_YELLOW)
-blocks.append(buttonBlock) 
 
 clock = pygame.time.Clock()
 running = True
@@ -71,7 +68,7 @@ while running:
         
     pygame.display.update()
     
-    clock.tick(10)
+    clock.tick(6)
 
 pygame.quit()
 sys.exit()
