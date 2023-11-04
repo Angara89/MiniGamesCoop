@@ -5,15 +5,16 @@ import sys
 
 class Surface:
 	def __init__(self):
-		self.white = (255, 255, 255)
-		self.yellow = (255, 255, 102)
-		self.blue = (121, 197, 216)
-		self.red = (181, 65, 111)
-		self.black = (0, 0, 0)
-		self.green = (0, 255, 0)
+		self.white = pygame.Color(255, 255, 255)
+		self.yellow = pygame.Color(255, 255, 102)
+		self.blue = pygame.Color(121, 197, 216)
+		self.red = pygame.Color(181, 65, 111)
+		self.black = pygame.Color(0, 0, 0)
+		self.green = pygame.Color(0, 255, 0)
 		
 		self.disWight = 800
 		self.disHeight = 600
+		self.score = 0
 		
 	def chek_errors(self):
 		checkErrors = pygame.init()
@@ -45,16 +46,16 @@ class Surface:
 	def refresh_screen(self):
 		pygame.display.flip()
 		self.fpsControl = pygame.time.Clock(30)
-	def show_score(self, choice=1):
-		sFront = pygame.front.SysFront("Monaco", 24)
-		sSurf = sFront.render('Score: {0}'.format(self.score), True, self.black)
-		sRect = sSurf.get_rect()
+	def score(self, choice=1):
+		s_font = pygame.font.SysFont("Monaco", 24)
+		s_surf = s_font.render('Score: {0}'.format(self.score), True, self.black)
+		s_rect = s_surf.get_rect()
 		if choice == 1:
-			sRect.midtop = (80, 10)
+			s_rect.midtop = (80, 10)
 		else:
-			sRect.midtop = (360, 120)
+			s_rect.midtop = (360, 120)
 			
-		self.playSurface.blit(sSurf, sRect)
+		self.playSurface.blit(s_surf, s_rect)
 		
 	def game_over(self):
 		goFont = pygame.font.SysFont('monaco', 72)
@@ -62,7 +63,7 @@ class Surface:
 		goRect = goSurf.get_rect()
 		goRect.midtop = (360, 15)
 		self.playSurface.blit(goSurf, goRect)
-		self.show_score(0)
+		self.score(0)
 		pygame.display.flip()
 		time.sleep(3)
 		pygame.quit()
