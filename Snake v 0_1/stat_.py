@@ -1,4 +1,4 @@
-from  stats import Stats
+from block import Block
 from DrawnObj import DrawnObj
 import pygame
 
@@ -13,8 +13,8 @@ class Stat(DrawnObj):
 	
 	yCommon = -1
 	xCommon = -1
-	def new_obj(self):
-		Stat.sizeMainFont = int(self.myStats.size[1] / 100 * 70)
+	def new_obj(self, stats: Block):
+		Stat.sizeMainFont = int(stats.size[1] / 100 * 70)
 		Stat.sizeMediumFont = int(Stat.sizeMainFont / 100 * 75)
 		Stat.sizeMiniFont = int(Stat.sizeMainFont / 100 * 50)
 		
@@ -23,13 +23,13 @@ class Stat(DrawnObj):
 		Stat.indentFromBottom = int(Stat.sizeMainFont / 20)
 		Stat.indentFromLeft = int(Stat.sizeMainFont / 10)
 		
-		Stat.yCommon = int((self.myStats.size[1] - Stat.sizeMainFont) / 2)
+		Stat.yCommon = int((stats.size[1] - Stat.sizeMainFont) / 2)
 		Stat.xCommon = Stat.sizeMainFont
 		
 		
 	
 	def __init__(self,
-	             stats: Stats,
+	             stats: Block,
 	             qIndent: int,
 	             xSizeOnIndent: int,
 	             text: str,
@@ -41,9 +41,8 @@ class Stat(DrawnObj):
 	             number: float = -1,
 	             haveNumber: bool = False):
 		
-		self.myStats = stats
 		if (Stat.mainIndent == -1):
-			self.new_obj()
+			self.new_obj(stats)
 		anchorPoint = (Stat.xCommon + qIndent * Stat.mainIndent, Stat.yCommon)
 		size = (xSizeOnIndent * Stat.mainIndent, Stat.sizeMainFont)
 		
@@ -84,6 +83,10 @@ class Stat(DrawnObj):
 	
 	def plus_my_number(self):
 		self.number += 1
+		self.print()
+	
+	def set_my_number(self, n: int):
+		self.number = n
 		self.print()
 			
 	def print(self):

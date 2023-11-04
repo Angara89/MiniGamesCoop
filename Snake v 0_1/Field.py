@@ -1,8 +1,6 @@
 import pygame.rect
 from DrawnObj import DrawnObj
 from block import Block
-from stat_ import Stat
-
 INDENT_TO_BORDER_FIELD = 10
 
 class Field(DrawnObj):
@@ -82,14 +80,20 @@ class Field(DrawnObj):
 			if (self.snake.head == apple.coord):
 				apple.apple_is_eaten()
 				self.stat_block_quantity_snake.plus_my_number()
+				self.myStats.new_points()
 				self.snake.flagEatenApple = True
 
 	def get_new_anchorPoint_on_coord(self, coord):
 		return (self.mainRect.left + (self.PIXEL_CELL * coord[0]),
 		        self.mainRect.top + (self.PIXEL_CELL * coord[1]))
 
-
-	def add_stat_block_quantity_snake(self, stat: Stat):
+	
+	
+	def set_stats_block(self, stats):
+		from stats import Stats
+		self.myStats = stats
+	def add_stat_block_quantity_snake(self, stat):
+		from stat_ import Stat
 		self.stat_block_quantity_snake = stat
 	
 	

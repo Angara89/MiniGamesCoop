@@ -1,10 +1,10 @@
 from pygame import PixelArray
 
-import Field
+from Field import Field
 import pygame
-import DrawnObj
-import block
-import Apple
+from DrawnObj import DrawnObj
+from block import Block
+from Apple import Apple
 import sys
 from stats import Stats
 from stat_ import Stat
@@ -34,8 +34,8 @@ blocks = []
 hInfoBlock = int(screenHeight / 20)
 
 
-mainBlock = block.Block((screenWidth, screenHeight-hInfoBlock), anchorPoint=(0, hInfoBlock))
-field = Field.Field(mainBlock)
+mainBlock = Block((screenWidth, screenHeight-hInfoBlock), anchorPoint=(0, hInfoBlock))
+field = Field(mainBlock)
 blocks.append(mainBlock)
 
 infoBlock = Stats((screenWidth, hInfoBlock), anchorPoint=(0, 0))
@@ -55,15 +55,36 @@ levelText = Stat(stats=infoBlock,
                     )
 qBlockSnakeText = Stat(stats=infoBlock,
                     qIndent=1,
-                    xSizeOnIndent=20,
+                    xSizeOnIndent=8,
                     text=r"Size snake: ",
                     textColor=COLOR_RED,
                     sizeFont="mediumFont",
                     number=3,
                     haveNumber=True
                     )
+pointText = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=7,
+                    text=r"Point: ",
+                    textColor=COLOR_YELLOW,
+                    sizeFont="mediumFont",
+                    number=0,
+                    haveNumber=True
+                    )
+infoBlock.set_pointsStat(pointText)
+field.set_stats_block(infoBlock)
 field.add_stat_block_quantity_snake(qBlockSnakeText)
 
+qThisPointsText = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=7,
+                    text=r"Now point: ",
+                    textColor=COLOR_YELLOW,
+                    sizeFont="mediumFont",
+                    number=0,
+                    haveNumber=True
+                    )
+infoBlock.set_addToPointsStat(qThisPointsText)
 
 # infoBlock.fill_color((100, 0, 100))
 blocks.append(infoBlock)
@@ -87,9 +108,11 @@ while running:
                 dir = "D"
             elif event.key == pygame.K_UP or event.key == pygame.K_w:
                 dir = "U"
+    infoBlock.step_snake()
     field.snake.change_direction(dir)
     field.snake.step_snake()
     field.is_apple_eaten()
+    
     if field.is_it_a_loss():
         running = False
         
