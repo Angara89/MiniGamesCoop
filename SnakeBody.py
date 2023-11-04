@@ -1,5 +1,7 @@
 import random
 import pygame
+import time
+import sys
 class Body:
 	def __init__(self, field, x, y):
 		self.snakeHead = [100, 50]
@@ -7,7 +9,12 @@ class Body:
 		self.body = [[100, 50], [90,50], [90, 50]]
 		self.snakeColor = snakeColor
 		self.direction = "right"
-		self.changeTo = self.direction
+		self.change_to = self.direction
+		
+	def validate_direction(self):
+		if any((self.change_to == "RIGHT" and not self.direction == "LEFT", self.change_to == "LEFT" and not self.direction == "RIGHT",
+		        self.change_to == "UP" and not self.direction == "DOWN", self.change_to == "DOWN" and not self.direction == "UP")):
+			self.direction = self.change_to
 	
 	def change_head_position(self):
 		if self.direction == "RIGHT":
@@ -20,7 +27,16 @@ class Body:
 			self.snake_head_pos[1] += 10
 			# К нулевому элементу не прибавляется переменная, неп оперенацинализации к снейкхеду позу
 		
-			
+	
+	def chek_for_bound(self, game_over, disWight, disHeight):
+		if any((self.snakeHead[0] > disWight - 10 or self.snakeHead[0]< 0,
+		       self.snakeHead[1] > disHeight-10 or self.snakeHead[1] <10)):
+			game_over
+		for block in self.snakebody[1:]:
+			if (block[0] == self.snakeHead[0] and block[1] == self.snakeHead[1]):
+				game_over
+				
+				
 	def body_mech(self, score, foodPos, width, heigth):
 		self.snakebody.insert(0, list(self.snakeHead))
 		if (self.snakeHead[0] == foodPos[0] and self.snakeHead[1] == foodPos[1]):
