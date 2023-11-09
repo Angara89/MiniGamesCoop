@@ -86,7 +86,6 @@ qThisPointsText = Stat(stats=infoBlock,
                     )
 infoBlock.set_addToPointsStat(qThisPointsText)
 
-# infoBlock.fill_color((100, 0, 100))
 blocks.append(infoBlock)
 
 
@@ -115,14 +114,14 @@ while running:
     
     if field.is_it_a_loss():
         running = False
-        
+    screen.fill((0, 0, 0, 0))
     for block in blocks:
         block.draw_all_DrawnObj()
         screen.blit(block, block.get_anchorPoint())
         
     pygame.display.update()
     
-    clock.tick(6)
+    clock.tick(4)
 
 pygame.quit()
 sys.exit()

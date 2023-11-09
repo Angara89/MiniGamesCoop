@@ -1,4 +1,4 @@
-import pygame.rect
+import pygame
 from DrawnObj import DrawnObj
 from block import Block
 INDENT_TO_BORDER_FIELD = 10
@@ -15,7 +15,7 @@ class Field(DrawnObj):
 		self.rectField = pygame.Rect(self.indent, self.indent,
 		                             self.myBlock.size[0] - (2 * self.indent),
 		                             self.myBlock.size[1] - (2 * self.indent))
-		pygame.draw.rect(self.myBlock, (255, 0, 255), self.rectField)
+		# pygame.draw.rect(self.myBlock, (255, 0, 255), self.rectField)
 		self.quantityCellsX = 0
 		
 		while ((self.quantityCellsX + 1) * self.PIXEL_CELL < self.rectField.width): #пока число клеток умноженное на её размер меньше длинный поля
@@ -35,7 +35,21 @@ class Field(DrawnObj):
 		                            (self.quantityCellsX * self.PIXEL_CELL),
 		                            (self.quantityCellsY * self.PIXEL_CELL))
 		pygame.draw.rect(self.myBlock, (0, 255, 0), self.mainRect)
-		self.thisSurface.fill((0, 100, 0))
+		
+		
+		
+		self.pictureField = DrawnObj(self.myBlock, self.myBlock.size, (0, 0))
+		
+		img = pygame.image.load(r"material\stone_texture_1.jpg")
+		img = pygame.transform.scale(img, self.myBlock.size)
+		
+		# self.pictureField = DrawnObj(self.myBlock, self.myBlock.size, (0, 0), path=r"material\grass_1.jpg")
+		t = pygame.Surface(self.myBlock.size, pygame.SRCALPHA)
+		t.fill((0, 100, 50, 200))
+		img.blit(t, (0, 0))
+		# self.pictureField.thisSurface.fill()
+		self.pictureField.thisSurface.blit(img, (0, 0))
+		# self.thisSurface.fill((0, 100, 0, 0))
 		self.create_background()
 		from Snake import Snake
 		from Apple import Apple
@@ -46,6 +60,8 @@ class Field(DrawnObj):
 		self.apples = []
 		for _ in range(1):
 			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
+			
+		self.myBlock.fill((0, 0, 0, 0))
 
 	def is_it_a_loss(self):
 		if (self.snake.head[0] == -1 or self.snake.head[1] == -1 or
@@ -60,17 +76,28 @@ class Field(DrawnObj):
 		
 	def create_background(self):
 		self.background = DrawnObj(self.myBlock, self.mainRect.size, self.mainRect.topleft)
-		colorMain = (107, 157, 41)
+		alphaChanel = 240
+		colorMain = (107, 157, 41, alphaChanel)
 		# colorSub = (107, 157, 41)
-		colorSub = (83, 114, 43)
+		colorSub = (83, 114, 43, alphaChanel)
+		img = pygame.image.load(r"material\grass_3.jpg")
+		img = pygame.transform.scale(img, self.mainRect.size)
 		
 		x, y = 0, 0
+		tSur = pygame.Surface(self.mainRect.size, pygame.SRCALPHA)
 		for row in range(self.quantityCellsX):
 			for col in range(self.quantityCellsY):
 				x = row * self.PIXEL_CELL
 				y = col * self.PIXEL_CELL
 				color = colorMain if (row + col) % 2 == 0 else colorSub
-				pygame.draw.rect(self.background.thisSurface, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
+				
+				pygame.draw.rect(tSur, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
+				# pygame.draw.rect(self.background.thisSurface, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
+		# img.fill((0, 0, 0, 250))
+		self.background.thisSurface.blit(img, (0, 0))
+		self.background.thisSurface.blit(tSur, (0, 0))
+		
+		
 			
 	def get_new_anchorPoint_from_topLeft(self, coord):
 		return ((self.PIXEL_CELL * coord[0]), (self.PIXEL_CELL * coord[1]))
