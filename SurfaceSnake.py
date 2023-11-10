@@ -12,8 +12,8 @@ class Surface:
 		self.black = pygame.Color(0, 0, 0)
 		self.green = pygame.Color(0, 255, 0)
 		
-		self.disWight = 800
-		self.disHeight = 600
+		self.disWight = 1920
+		self.disHeight = 1080
 		self.score = 0
 		
 	def chek_errors(self):
@@ -63,7 +63,7 @@ class Surface:
 		goRect = goSurf.get_rect()
 		goRect.midtop = (360, 15)
 		self.playSurface.blit(goSurf, goRect)
-		self.score(0)
+		self.score=0
 		pygame.display.flip()
 		time.sleep(3)
 		pygame.quit()

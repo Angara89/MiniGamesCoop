@@ -2,6 +2,7 @@ import random
 import pygame
 import time
 import sys
+
 class Body:
 	def __init__(self, field, snakeColor):
 		self.snakeHead = [100, 50]
@@ -31,10 +32,10 @@ class Body:
 	def chek_for_bound(self, game_over, disWight, disHeight):
 		if any((self.snakeHead[0] > disWight - 10 or self.snakeHead[0]< 0,
 		       self.snakeHead[1] > disHeight-10 or self.snakeHead[1] <10)):
-			game_over
+			game_over()
 		for block in self.body[1:]:
-			if (block[0] == self.snakeHead[0] and block[1] == self.snakeHead[1]):
-				game_over
+			if block[0] == self.snakeHead[0] and block[1] == self.snakeHead[1]:
+				game_over()
 				
 				
 	def body_mech(self, score, foodPos, width, heigth):

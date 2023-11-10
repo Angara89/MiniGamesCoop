@@ -12,6 +12,20 @@ snake = Body(surface.green, 10)
 surface.chek_errors()
 surface.Set_surface()
 food = food(surface.green, surface.disWight, surface.disHeight)
+
+
+def game_over(self):
+    goFont = pygame.font.SysFont('monaco', 72)
+    goSurf = goFont.render('Game over', True, self.red)
+    goRect = goSurf.get_rect()
+    goRect.midtop = (360, 15)
+    self.playSurface.blit(goSurf, goRect)
+    self.score(int(0))
+    pygame.display.flip()
+    time.sleep(3)
+    pygame.quit()
+    sys.exit()
+    
 while True:
     snake.change_to = surface.event_loop(snake.change_to)
     snake.validate_direction()
