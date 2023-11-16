@@ -29,6 +29,7 @@ class Snake(DrawnObj):
 		self.draw_snake()
 		self.speed = speed
 		self.fps = FPS
+		
 		self.soundStep = pygame.mixer.Sound(r"material\sound\wshuuu_1.wav")
 	
 

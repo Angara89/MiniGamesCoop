@@ -1,3 +1,5 @@
+import random
+
 from pygame import PixelArray
 
 from Field import Field
@@ -10,7 +12,8 @@ from stats import Stats
 from stat_ import Stat
 import threading
 from threading import Thread
-
+from barrier import Barrier
+import random
 
 
 COLOR_RED = (255, 0, 0)
@@ -39,6 +42,19 @@ hInfoBlock = int(screenHeight / 20)
 
 mainBlock = Block((screenWidth, screenHeight-hInfoBlock), anchorPoint=(0, hInfoBlock))
 field = Field(mainBlock, SPEED)
+
+barriers = []
+# for _ in range(10):
+#     barriers.append(
+#         Barrier(field=field, coord=(random.randint(0, field.quantityCellsX), random.randint(0, field.quantityCellsY)),
+#                 isMove=True)
+#     )
+    
+barriers.append(Barrier(field=field, coord=(5, 5), isMove=True, moveStep=["U", "R", "U"]))
+
+
+
+
 blocks.append(mainBlock)
 
 infoBlock = Stats((screenWidth, hInfoBlock), anchorPoint=(0, 0))
@@ -168,11 +184,15 @@ while running:
         field.snake.change_direction(dir.pop(0))
     
     field.snake.step_snake()
+    for barrier in barriers:
+        barrier.move()
+    
     # tThread.start()
     field.is_apple_eaten()
     
     if field.is_it_a_loss():
         running = False
+        break
     # screen.fill((0, 0, 0, 0))
     # for block in blocks:
     #     block.draw_all_DrawnObj()
@@ -182,7 +202,9 @@ while running:
     
     clock.tick(SPEED)
     # tThread.join()
-    
+
+clock.tick(1)
+
 theardFPS.join()
 theardDrawLoop.join()
 pygame.quit()

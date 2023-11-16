@@ -8,6 +8,7 @@ class Field(DrawnObj):
 	
 	
 	def __init__(self, tBlock: Block, speed):
+		self.barriers = []
 		self.PIXEL_CELL = 60
 		super().__init__(tBlock, tBlock.size, (0, 0))
 		self.indent = int(self.myBlock.size[1] / 100)  # делаем отступы для рамки в 1 процент от высоты
@@ -94,7 +95,9 @@ class Field(DrawnObj):
 		for part in self.snake.parts:
 			if part == self.snake.head:
 				return True
-
+			for barrier in self.barriers:
+				if part == barrier.coord:
+					return True
 		return False
 		
 	def create_background(self):

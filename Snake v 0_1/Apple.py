@@ -36,5 +36,8 @@ class Apple(DrawnObj):
 					flag = 0
 			if self.myField.snake.tail == newCoord or self.myField.snake.head == newCoord:
 				flag = 0
+			for barrier in self.myField.barriers:
+				if (barrier.coord == newCoord):
+					flag = 0
 			
 		return newCoord
