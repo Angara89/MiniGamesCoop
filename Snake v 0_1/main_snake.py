@@ -8,7 +8,8 @@ from Apple import Apple
 import sys
 from stats import Stats
 from stat_ import Stat
-
+import threading
+from threading import Thread
 
 
 
@@ -88,40 +89,63 @@ infoBlock.set_addToPointsStat(qThisPointsText)
 
 blocks.append(infoBlock)
 
+running = True
+def draw_loop():
+    clock = pygame.time.Clock()
+    global running
+    global screen
+    global blocks
+    while (running):
+        screen.fill((0, 0, 0, 0))
+        for block in blocks:
+            block.draw_all_DrawnObj()
+            screen.blit(block, block.get_anchorPoint())
+        
+        pygame.display.update()
+        clock.tick(60)
 
+theardDrawLoop = Thread(target=draw_loop)
+theardDrawLoop.start()
 
 clock = pygame.time.Clock()
-running = True
-dir = "U"
+
+dir = []
+lastDir = "U"
+
 while running:
-    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                dir = "L"
+                dir.append("L")
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                dir = "R"
+                dir.append("R")
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                dir = "D"
+                dir.append("D")
             elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                dir = "U"
+                dir.append("U")
     infoBlock.step_snake()
-    field.snake.change_direction(dir)
+    if len(dir) == 0:
+        field.snake.change_direction(lastDir)
+    else:
+        lastDir = dir[0]
+        field.snake.change_direction(dir.pop(0))
+        
     field.snake.step_snake()
     field.is_apple_eaten()
     
     if field.is_it_a_loss():
         running = False
-    screen.fill((0, 0, 0, 0))
-    for block in blocks:
-        block.draw_all_DrawnObj()
-        screen.blit(block, block.get_anchorPoint())
-        
-    pygame.display.update()
+    # screen.fill((0, 0, 0, 0))
+    # for block in blocks:
+    #     block.draw_all_DrawnObj()
+    #     screen.blit(block, block.get_anchorPoint())
+    #
+    # pygame.display.update()
     
-    clock.tick(4)
-
+    clock.tick(1)
+    
+theardDrawLoop.join()
 pygame.quit()
 sys.exit()

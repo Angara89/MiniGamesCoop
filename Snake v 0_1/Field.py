@@ -45,7 +45,8 @@ class Field(DrawnObj):
 		
 		# self.pictureField = DrawnObj(self.myBlock, self.myBlock.size, (0, 0), path=r"material\grass_1.jpg")
 		t = pygame.Surface(self.myBlock.size, pygame.SRCALPHA)
-		t.fill((0, 100, 50, 200))
+		GREY = 0
+		t.fill((GREY, GREY, GREY, 200))
 		img.blit(t, (0, 0))
 		# self.pictureField.thisSurface.fill()
 		self.pictureField.thisSurface.blit(img, (0, 0))
@@ -68,7 +69,7 @@ class Field(DrawnObj):
 	def borders_field(self):
 		self.borders = DrawnObj(blockT=self.myBlock, aPoint=self.mainRect.topleft, size=self.mainRect.size)
 		board = pygame.Surface(size=self.mainRect.size, flags=pygame.SRCALPHA)
-		board.fill(((36, 37, 42, 240)))
+		board.fill(((17, 55, 13, 240)))
 		tIndent = self.PIXEL_CELL / 10
 		pygame.draw.rect(
 			board,

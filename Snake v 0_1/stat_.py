@@ -14,7 +14,7 @@ class Stat(DrawnObj):
 	yCommon = -1
 	xCommon = -1
 	def new_obj(self, stats: Block):
-		Stat.sizeMainFont = int(stats.size[1] / 100 * 70)
+		Stat.sizeMainFont = int(stats.size[1] / 100 * 60)
 		Stat.sizeMediumFont = int(Stat.sizeMainFont / 100 * 75)
 		Stat.sizeMiniFont = int(Stat.sizeMainFont / 100 * 50)
 		
