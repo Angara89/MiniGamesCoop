@@ -25,7 +25,7 @@ COLOR_GRAY = (128, 128, 128)
 COLOR_LIGHT_GRAY = (192, 192, 192)
 
 FPS = 60
-SPEED = 4
+SPEED = 5
 
 pygame.init()
 screenWidth = 1920
@@ -103,6 +103,8 @@ blocks.append(infoBlock)
 
 
 running = True
+
+cFPS = 0
 def draw_loop():
     clock = pygame.time.Clock()
     global running
@@ -110,9 +112,10 @@ def draw_loop():
     global blocks
     global FPS
     global timeStats
-    cFPS = 0
+    global cFPS
+    
     while (running):
-        timeStats.plus_my_number()
+        cFPS += 1
         screen.fill((0, 0, 0, 0))
         for block in blocks:
             block.draw_all_DrawnObj()
@@ -120,9 +123,23 @@ def draw_loop():
         
         pygame.display.update()
         clock.tick(FPS)
-
+        
+def fps():
+    global timeStats
+    global cFPS
+    clock = pygame.time.Clock()
+    global running
+    while running:
+        timeStats.set_my_number(cFPS)
+        cFPS = 0
+        clock.tick(1)
+        
+        
+    
+theardFPS = Thread(target=fps)
 theardDrawLoop = Thread(target=draw_loop)
 theardDrawLoop.start()
+theardFPS.start()
 
 clock = pygame.time.Clock()
 
@@ -166,6 +183,7 @@ while running:
     clock.tick(SPEED)
     # tThread.join()
     
+theardFPS.join()
 theardDrawLoop.join()
 pygame.quit()
 sys.exit()

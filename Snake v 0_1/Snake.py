@@ -11,9 +11,9 @@ class Snake(DrawnObj):
 		
 		self.direction = "U"
 		self.head = (int(self.myField.quantityCellsX/2), int(self.myField.quantityCellsY/2))
-		self.tail = (self.head[0], self.head[1] - 1)
+		self.tail = (self.head[0], self.head[1] + 1)
 		self.parts = [self.tail]
-		self.tail = (self.head[0], self.head[1] - 2)
+		self.tail = (self.head[0], self.head[1] + 2)
 		PIXEL_CELL = self.myField.PIXEL_CELL
 		self.imgHead = pygame.image.load(r"material\snake_head_3.png")
 		self.imgHead = pygame.transform.scale(self.imgHead, (PIXEL_CELL, PIXEL_CELL))
