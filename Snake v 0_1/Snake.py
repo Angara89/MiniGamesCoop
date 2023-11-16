@@ -38,36 +38,61 @@ class Snake(DrawnObj):
 	
 	def draw_animation(self):
 		clock = pygame.time.Clock()
+		head_surface = self.imgHead.convert_alpha()
+		part_surface = self.imgPart.convert_alpha()
+		countFrame = self.fps / self.speed
+		
+		
 		headPos = self.get_new_anchorPoint(self.head)
 		
+		partsPos = []
+		for part in self.parts:
+			partsPos.append(self.get_new_anchorPoint(part))
+		
 		self.move_snake()
+		
 		headNeedPos = self.get_new_anchorPoint(self.head)
+		
+		partsNeedPos = []
+		for part in self.parts:
+			partsNeedPos.append(self.get_new_anchorPoint(part))
+		
+		partPosAndChange = []
+		for i in range(len(partsPos)):
+			partPosAndChange.append(
+				(
+					partsPos[i],
+					(
+						int((partsNeedPos[i][0] - partsPos[i][0]) / countFrame),
+						int((partsNeedPos[i][1] - partsPos[i][1]) / countFrame)
+					)
+				)
+			)
 		
 		changeX = headNeedPos[0] - headPos[0]
 		changeY = headNeedPos[1] - headPos[1]
-		
-		countFrame = self.fps / self.speed
-		i = 0
-		
 		changeX /= countFrame
 		changeY /= countFrame
-		head_surface = self.imgHead.convert_alpha()
 		
-		while i != countFrame:
-			i += 1
+		p = 0
+		while p != countFrame:
+			p += 1
 			
-			# part_surface = self.imgPart.convert_alpha()
 			# tail_surface = self.imgTail.convert_alpha()
 			self.thisSurface.fill((0, 0, 0, 0))
 			self.thisSurface.blit(head_surface, headPos)
+			
+			for i in range(len(partPosAndChange)):
+				self.thisSurface.blit(part_surface, partPosAndChange[i][0])
+				partPosAndChange[i] = (
+					(
+						partPosAndChange[i][0][0] + partPosAndChange[i][1][0],
+						partPosAndChange[i][0][1] + partPosAndChange[i][1][1],
+					),
+					partPosAndChange[i][1]
+				)
+				
 			headPos = (headPos[0] + changeX, headPos[1] + changeY)
-			# for part in self.parts:
-			# 	self.thisSurface.blit(part_surface, self.get_new_anchorPoint(part))
-			#
-			# self.thisSurface.blit(tail_surface, self.get_new_anchorPoint(self.tail))
-			
-			
-			
 			clock.tick(self.fps)
 			
 			
