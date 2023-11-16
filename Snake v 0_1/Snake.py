@@ -15,7 +15,7 @@ class Snake(DrawnObj):
 		self.parts = [self.tail]
 		self.tail = (self.head[0], self.head[1] + 2)
 		PIXEL_CELL = self.myField.PIXEL_CELL
-		self.imgHead = pygame.image.load(r"material\snake_head_3.png")
+		self.imgHead = pygame.image.load(r"material\snake_part_5.png")
 		self.imgHead = pygame.transform.scale(self.imgHead, (PIXEL_CELL, PIXEL_CELL))
 		
 		self.imgPart = pygame.image.load(r"material\snake_part_5.png")
@@ -29,10 +29,12 @@ class Snake(DrawnObj):
 		self.draw_snake()
 		self.speed = speed
 		self.fps = FPS
+		self.soundStep = pygame.mixer.Sound(r"material\sound\wshuuu_1.wav")
 	
 
 		
 	def step_snake(self):
+		self.soundStep.play()
 		# self.move_snake()
 		self.draw_animation()
 	
@@ -82,10 +84,10 @@ class Snake(DrawnObj):
 			
 			
 			self.thisSurface.fill((0, 0, 0, 0))
-			self.thisSurface.blit(head_surface, headPos)
+			
 			self.thisSurface.blit(tail_surface, tailPos)
 			
-			for i in range(len(partPosAndChange)):
+			for i in reversed(range(len(partPosAndChange))):
 				self.thisSurface.blit(part_surface, partPosAndChange[i][0])
 				partPosAndChange[i] = (
 					(
@@ -94,7 +96,7 @@ class Snake(DrawnObj):
 					),
 					partPosAndChange[i][1]
 				)
-				
+			self.thisSurface.blit(head_surface, headPos)
 			headPos = (headPos[0] + changeX, headPos[1] + changeY)
 			tailPos = (tailPos[0] + changeXT, tailPos[1] + changeYT)
 			clock.tick(self.fps)

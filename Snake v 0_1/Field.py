@@ -55,14 +55,13 @@ class Field(DrawnObj):
 		from Snake import Snake
 		from Apple import Apple
 		
-		
-		
 		self.snake = Snake(self, speed=speed)
 		self.apples = []
 		for _ in range(1):
 			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
 			
 		self.myBlock.fill((0, 0, 0, 0))
+		
 		self.borders_field()
 
 

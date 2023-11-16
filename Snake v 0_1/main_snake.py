@@ -13,7 +13,7 @@ from threading import Thread
 
 
 
-COLOR_RED =(255, 0, 0)
+COLOR_RED = (255, 0, 0)
 COLOR_GREEN = (0, 255, 0)
 COLOR_BLUE = (0, 0, 255)
 COLOR_YELLOW = (255, 255, 0)
@@ -88,7 +88,7 @@ qThisPointsText = Stat(stats=infoBlock,
                     haveNumber=True
                     )
 timeStats = Stat(stats=infoBlock,
-                    qIndent=1,
+                    qIndent=10,
                     xSizeOnIndent=7,
                     text=r"",
                     textColor=COLOR_YELLOW,

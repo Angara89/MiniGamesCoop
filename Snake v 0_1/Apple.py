@@ -12,9 +12,11 @@ class Apple(DrawnObj):
 		self.myField = field
 		self.coord = self.new_random_coord()
 		self.anchorPoint = self.myField.get_new_anchorPoint_on_coord(self.coord)
+		self.soundEat = pygame.mixer.Sound(r"material\sound\hhhhraaaaaammm_1.wav")
 	
 	
 	def apple_is_eaten(self):
+		self.soundEat.play()
 		self.coord = self.new_random_coord()
 		self.anchorPoint = self.myField.get_new_anchorPoint_on_coord(self.coord)
 		
