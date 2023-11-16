@@ -24,6 +24,8 @@ COLOR_WHITE = (255, 255, 255)
 COLOR_GRAY = (128, 128, 128)
 COLOR_LIGHT_GRAY = (192, 192, 192)
 
+FPS = 60
+SPEED = 4
 
 pygame.init()
 screenWidth = 1920
@@ -36,7 +38,7 @@ hInfoBlock = int(screenHeight / 20)
 
 
 mainBlock = Block((screenWidth, screenHeight-hInfoBlock), anchorPoint=(0, hInfoBlock))
-field = Field(mainBlock)
+field = Field(mainBlock, SPEED)
 blocks.append(mainBlock)
 
 infoBlock = Stats((screenWidth, hInfoBlock), anchorPoint=(0, 0))
@@ -85,9 +87,20 @@ qThisPointsText = Stat(stats=infoBlock,
                     number=0,
                     haveNumber=True
                     )
+timeStats = Stat(stats=infoBlock,
+                    qIndent=1,
+                    xSizeOnIndent=7,
+                    text=r"",
+                    textColor=COLOR_YELLOW,
+                    sizeFont="mediumFont",
+                    number=0,
+                    haveNumber=True
+                    )
 infoBlock.set_addToPointsStat(qThisPointsText)
 
 blocks.append(infoBlock)
+
+
 
 running = True
 def draw_loop():
@@ -95,14 +108,18 @@ def draw_loop():
     global running
     global screen
     global blocks
+    global FPS
+    global timeStats
+    cFPS = 0
     while (running):
+        timeStats.plus_my_number()
         screen.fill((0, 0, 0, 0))
         for block in blocks:
             block.draw_all_DrawnObj()
             screen.blit(block, block.get_anchorPoint())
         
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(FPS)
 
 theardDrawLoop = Thread(target=draw_loop)
 theardDrawLoop.start()
@@ -111,6 +128,7 @@ clock = pygame.time.Clock()
 
 dir = []
 lastDir = "U"
+# tThread = Thread(field.snake.step_snake, daemon=True, name="Animation snake")
 
 while running:
     for event in pygame.event.get():
@@ -131,8 +149,9 @@ while running:
     else:
         lastDir = dir[0]
         field.snake.change_direction(dir.pop(0))
-        
+    
     field.snake.step_snake()
+    # tThread.start()
     field.is_apple_eaten()
     
     if field.is_it_a_loss():
@@ -144,7 +163,8 @@ while running:
     #
     # pygame.display.update()
     
-    clock.tick(1)
+    clock.tick(SPEED)
+    # tThread.join()
     
 theardDrawLoop.join()
 pygame.quit()
