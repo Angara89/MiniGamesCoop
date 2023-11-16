@@ -62,7 +62,30 @@ class Field(DrawnObj):
 			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
 			
 		self.myBlock.fill((0, 0, 0, 0))
+		self.borders_field()
 
+
+	def borders_field(self):
+		self.borders = DrawnObj(blockT=self.myBlock, aPoint=self.mainRect.topleft, size=self.mainRect.size)
+		board = pygame.Surface(size=self.mainRect.size, flags=pygame.SRCALPHA)
+		board.fill(((36, 37, 42, 240)))
+		tIndent = self.PIXEL_CELL / 10
+		pygame.draw.rect(
+			board,
+			(0, 0, 0, 0),
+			pygame.Rect(
+				tIndent,
+				tIndent,
+				self.mainRect.width-tIndent * 2,
+				self.mainRect.height - tIndent*2
+			)
+		)
+		
+		self.borders.thisSurface.blit(board, (0, 0))
+		# self.borders.thisSurface.fill((0, 0, 0, 240))
+	
+	
+	
 	def is_it_a_loss(self):
 		if (self.snake.head[0] == -1 or self.snake.head[1] == -1 or
 			self.snake.head[0] == self.quantityCellsX or self.snake.head[1] == self.quantityCellsY):
