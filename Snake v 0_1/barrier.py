@@ -30,11 +30,8 @@ class Barrier(DrawnObj):
 				
 		
 	def move(self):
-		
 		if (self.isMove != True):
 			return
-		
-		
 		if self.passMove < 3:
 			self.passMove += 1
 			return
