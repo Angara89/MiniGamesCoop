@@ -4,73 +4,72 @@ from block import Block
 INDENT_TO_BORDER_FIELD = 10
 
 class Field(DrawnObj):
-	
-	
-	
-	def __init__(self, tBlock: Block, speed):
-		self.barriers = []
-		self.PIXEL_CELL = 60
-		super().__init__(tBlock, tBlock.size, (0, 0))
-		self.indent = int(self.myBlock.size[1] / 100)  # делаем отступы для рамки в 1 процент от высоты
-		# присваеваем rect обьект в точке отступов,  шириной и длинной минус двойные отступы(так как отступы существуют с двух сторон
+	# класс "поля" нужен для взаимодействия "яблока" "змии" "поля" "барьеров" и тд
+	# в нем все создаеться и все контролируеться через него
+
+
+
+	# конструктор в который передаеться скорость и блок к которому относиться поле и собственно все в данном классе
+	def __init__(self, tBlock: Block, speed, pixCell = 60):
+		super().__init__(tBlock, tBlock.size, (0, 0)) # вызываем конструктор "рисуемого обьекта" передавая блок и делаем размеров у поля в весь блок к которому мы относимся, таке рисуем в нулевой точки
+		self.barriers = [] # инициализируем список барьеров
+		self.PIXEL_CELL = pixCell # устанавливаем размер клетки константой в 60 пикселей если не передано другого
+		self.indent = int(self.myBlock.size[1] / 100)  # делаем отступы  в 1 процент от высоты и приводим к целому числу
+		
+		# присваеваем rect обьект в точке равной отступу по x y
+		# шириной и длинной для каждого минус двойные отступы(так как отступы существуют с двух сторон)
+		# получаем квадрат с отступами в 1 процент по все сторонам
 		self.rectField = pygame.Rect(self.indent, self.indent,
 		                             self.myBlock.size[0] - (2 * self.indent),
 		                             self.myBlock.size[1] - (2 * self.indent))
-		# pygame.draw.rect(self.myBlock, (255, 0, 255), self.rectField)
-		self.quantityCellsX = 0
 		
-		while ((self.quantityCellsX + 1) * self.PIXEL_CELL < self.rectField.width): #пока число клеток умноженное на её размер меньше длинный поля
-			self.quantityCellsX += 1
+		self.quantityCellsX = int(self.rectField.width / self.PIXEL_CELL) # узнаем количество "клеток" (cells) по Х
+		self.quantityCellsY = int(self.rectField.height / self.PIXEL_CELL) # узнаем количество "клеток" (cells) по Y
 		
-		self.quantityCellsY = 0
+		# узнаем X опорной точки внутреннего прямоугольника
+		rectInnerX = int(self.rectField.width - (self.quantityCellsX * self.PIXEL_CELL))/2 + self.rectField.x
+		# узнаем Y опорной точки внутреннего прямоугольника
+		rectInnerY = int(self.rectField.height - (self.quantityCellsY * self.PIXEL_CELL))/2 + self.rectField.y
 		
-		while ((self.quantityCellsY + 1) * self.PIXEL_CELL < self.rectField.height): #пока число клеток умноженное на её размер меньше ширины поля
-			self.quantityCellsY += 1
-			
-		rectInnerX = int(self.rectField.width -
-		                 (self.quantityCellsX * self.PIXEL_CELL))/2 + self.rectField.x
-		rectInnerY = int(self.rectField.height -
-		                 (self.quantityCellsY * self.PIXEL_CELL))/2 + self.rectField.y
-		
+		# создаем главный прямоугольник в котором в котором соблюдены все отступы
+		# также он создан с учетом того что все "клетки" поместяться в нем и сам прямоугольник будет отцентрован
 		self.mainRect = pygame.Rect(rectInnerX, rectInnerY,
 		                            (self.quantityCellsX * self.PIXEL_CELL),
 		                            (self.quantityCellsY * self.PIXEL_CELL))
-		pygame.draw.rect(self.myBlock, (0, 255, 0), self.mainRect)
 		
-		
-		
+		# создаем текстуру для поля, сначало создаем поверхность во все полу
 		self.pictureField = DrawnObj(self.myBlock, self.myBlock.size, (0, 0))
-		
-		img = pygame.image.load(r"material\stone_texture_1.jpg")
-		img = pygame.transform.scale(img, self.myBlock.size)
-		
-		# self.pictureField = DrawnObj(self.myBlock, self.myBlock.size, (0, 0), path=r"material\grass_1.jpg")
-		t = pygame.Surface(self.myBlock.size, pygame.SRCALPHA)
+		img = pygame.image.load(r"material\stone_texture_1.jpg") # загружаем текстуру и запоминаем её
+		img = pygame.transform.scale(img, self.myBlock.size) # трансформируем  текстуру в размер всего блока и запоминаем
+		t = pygame.Surface(self.myBlock.size, pygame.SRCALPHA) # создаем временную текстурку размером с блок с альфо каналом
 		GREY = 0
-		t.fill((GREY, GREY, GREY, 200))
-		img.blit(t, (0, 0))
-		# self.pictureField.thisSurface.fill()
-		self.pictureField.thisSurface.blit(img, (0, 0))
-		# self.thisSurface.fill((0, 100, 0, 0))
-		self.create_background()
-		from Snake import Snake
-		from Apple import Apple
+		t.fill((GREY, GREY, GREY, 200)) # заливаем определенным цветом временную поверхность
+		img.blit(t, (0, 0)) # отображам эту временую поверхность в нулевой опорной точке
+		self.pictureField.thisSurface.blit(img, (0, 0)) # отображаем на нашей текстурку за полем в нулевых координатах наше обработаное изображение
 		
-		self.snake = Snake(self, speed=speed)
-		self.apples = []
-		for _ in range(1):
+		self.create_background() # вызываем метод для задачи обьемности внутри "поля"
+		
+		from Snake import Snake # распаковываем класс змеи в наш класс
+		self.snake = Snake(self, speed=speed) # создаем змею, передавая её скорость и запоминаем её
+		
+		from Apple import Apple # распаковываем класс яблока в наш класс
+		self.apples = [] # создаем список яблок
+		for _ in range(1): # цикл для нескольких ябллок
+			# добовляем в список яблок яблока передвая в конструктор яблока "поле"(себя), размер в одну "клетку" и картинку яблока
 			self.apples.append(Apple(self, (self.PIXEL_CELL, self.PIXEL_CELL), path=r"material\apple_1.png"))
 			
-		self.myBlock.fill((0, 0, 0, 0))
+			
+		self.borders_field() # создаем красивую границу для поля
+
 		
-		self.borders_field()
 
-
-	def borders_field(self):
+	def borders_field(self): # создаем границы поля, грубо говоря создаем границу у mainRect
+		# создаем "рисуемый обьект" границ на нашем блоке размером с mainRect в опорной точке mainRect
 		self.borders = DrawnObj(blockT=self.myBlock, aPoint=self.mainRect.topleft, size=self.mainRect.size)
-		board = pygame.Surface(size=self.mainRect.size, flags=pygame.SRCALPHA)
-		board.fill(((17, 55, 13, 240)))
-		tIndent = self.PIXEL_CELL / 10
+		board = pygame.Surface(size=self.mainRect.size, flags=pygame.SRCALPHA) # создаем временый обьект поверхности размером mainRect
+		board.fill(((17, 55, 13, 240))) # заливаем цветом нашу временную поверхность
+		tIndent = self.PIXEL_CELL / 10 # получаем грубо говоря размер наших границ
+		# отображаем пустое поле чуть внутри нашего board, тем самым создав границы
 		pygame.draw.rect(
 			board,
 			(0, 0, 0, 0),
@@ -80,95 +79,69 @@ class Field(DrawnObj):
 				self.mainRect.width-tIndent * 2,
 				self.mainRect.height - tIndent*2
 			)
-		)
-		
-		self.borders.thisSurface.blit(board, (0, 0))
-		# self.borders.thisSurface.fill((0, 0, 0, 240))
+		) # отображаем на нашем board (временной поверхности) прямоуголник(внутрений по отношщению к board) цветом прозрачности
+		self.borders.thisSurface.blit(board, (0, 0)) # отоброжаем наш временый на поврхности "поля" в нулевой точки
+
 	
 	
 	
-	def is_it_a_loss(self):
+	def is_it_a_loss(self): # метод проверяющие находиться ли змейка в проигрошном положении
+		# проверяет выход координат головы за границы поля
 		if (self.snake.head[0] == -1 or self.snake.head[1] == -1 or
 			self.snake.head[0] == self.quantityCellsX or self.snake.head[1] == self.quantityCellsY):
 			return True
 		
-		for part in self.snake.parts:
-			if part == self.snake.head:
+		for part in self.snake.parts: # для каждой части змейки проверяет
+			if part == self.snake.head: # если голова находиться в своей части (хвосте) то венуть True
 				return True
-			for barrier in self.barriers:
-				if part == barrier.coord:
+			for barrier in self.barriers: # для каждого барьера в списке барьеров проверяем
+				if part == barrier.coord: # если часть змейки в координатах барьера то вернуть True
 					return True
-		return False
+		return False # если все проверки пройденны вернуть Fasle, это не проигрыш в этом шаге
 		
-	def create_background(self):
-		self.background = DrawnObj(self.myBlock, self.mainRect.size, self.mainRect.topleft)
-		alphaChanel = 240
-		colorMain = (107, 157, 41, alphaChanel)
-		# colorSub = (107, 157, 41)
-		colorSub = (83, 114, 43, alphaChanel)
-		img = pygame.image.load(r"material\grass_3.jpg")
-		img = pygame.transform.scale(img, self.mainRect.size)
+	def create_background(self): # создаем фон для клеток основного поля
+		self.background = DrawnObj(self.myBlock, self.mainRect.size, self.mainRect.topleft) # создаем "рисуемый обьект" фона
+		alphaChanel = 240 # альфа канал для цветов
+		colorMain = (107, 157, 41, alphaChanel) # запоминаем цвет
+		colorSub = (83, 114, 43, alphaChanel) # запоминаем цвет
+		img = pygame.image.load(r"material\grass_3.jpg") # загружаем изображение фона
+		img = pygame.transform.scale(img, self.mainRect.size) # трансформируем изображение фона размером в главный прямоугольник и запоминаем его
 		
-		x, y = 0, 0
-		tSur = pygame.Surface(self.mainRect.size, pygame.SRCALPHA)
-		for row in range(self.quantityCellsX):
-			for col in range(self.quantityCellsY):
-				x = row * self.PIXEL_CELL
-				y = col * self.PIXEL_CELL
-				color = colorMain if (row + col) % 2 == 0 else colorSub
-				
-				pygame.draw.rect(tSur, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
-				# pygame.draw.rect(self.background.thisSurface, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL))
-		# img.fill((0, 0, 0, 250))
-		self.background.thisSurface.blit(img, (0, 0))
-		self.background.thisSurface.blit(tSur, (0, 0))
+		tSur = pygame.Surface(self.mainRect.size, pygame.SRCALPHA) # создаем временную поверхность с альфа каналом размером в главный прямоугольик
+		for row in range(self.quantityCellsX): # для каждой строки длинной в количесво клеток в Х
+			for col in range(self.quantityCellsY): # для каждой строки длинной в количесво клеток в Х65
+				x = row * self.PIXEL_CELL # получаем Х опорной точки данной итерации
+				y = col * self.PIXEL_CELL # получаем Y опорной точки данной итерации
+				color = colorMain if (row + col) % 2 == 0 else colorSub # выбираем цвет блока, если четный то  colorMain иначе colorSub
+				pygame.draw.rect(tSur, color, pygame.Rect(x, y, self.PIXEL_CELL, self.PIXEL_CELL)) # рисуем квадрат на временной поверхности соответстующих параметров
+
+		self.background.thisSurface.blit(img, (0, 0)) # отображаем на поверхности фона отредактированную картинку картинку
+		self.background.thisSurface.blit(tSur, (0, 0)) # отображаем на поверхности фона временую поверхность с клетками
 		
 		
 			
-	def get_new_anchorPoint_from_topLeft(self, coord):
+	def get_new_anchorPoint_from_topLeft(self, coord): # возвращает опорную точку в пикселях принимая координаты
+		# для каждой коориднаты просто умножаем её на константу "PIXELL_CELL" которая отвечает за размер одной клетки
 		return ((self.PIXEL_CELL * coord[0]), (self.PIXEL_CELL * coord[1]))
 
-	def is_apple_eaten(self):
-		for apple in self.apples:
-			if (self.snake.head == apple.coord):
-				apple.apple_is_eaten()
-				self.stat_block_quantity_snake.plus_my_number()
-				self.myStats.new_points()
-				self.snake.flagEatenApple = True
+	def is_apple_eaten(self): # метод проверяющий седенно ли яблокок
+		for apple in self.apples: # для каждого яблока в списке яблок
+			if (self.snake.head == apple.coord): # если координаты яблока равны координатам головы выполняем
+				apple.apple_is_eaten() # вызываем метод у яблокок что оно сьедено
+				self.stat_block_quantity_snake.plus_my_number() # в блоке статистики длины змейки увеличиваем число вызывая метод у этой статистики
+				self.myStats.new_points() # у другого блока статистики вызываем метод обнуления счетчика очков
+				self.snake.flagEatenApple = True  # ставим фалг змейки что яблоко сьедено (нужно чтобы при передвижении змейка увеличилась на 1 блок
 
-	def get_new_anchorPoint_on_coord(self, coord):
+	def get_new_anchorPoint_on_coord(self, coord): # метод возвращающий новуюу опорную точку в зависимости от координат, от опорной точки главного прямоугольника
 		return (self.mainRect.left + (self.PIXEL_CELL * coord[0]),
 		        self.mainRect.top + (self.PIXEL_CELL * coord[1]))
 
 	
 	
-	def set_stats_block(self, stats):
+	def set_stats_block(self, stats): # запоминаем блок статистик
 		from stats import Stats
 		self.myStats = stats
-	def add_stat_block_quantity_snake(self, stat):
+	def add_stat_block_quantity_snake(self, stat): # запоминаем блок статистики по дланне змейки
 		from stat_ import Stat
 		self.stat_block_quantity_snake = stat
-	
-	
-	# def draw_cells(self):
-	# 	rect = self.rectField
-	# 	cellsSize = PIXEL_CELL
-	# 	indent = 10
-	# 	rLeft = rect.left + indent
-	# 	rRight = rect.right + indent
-	# 	rTop = rect.top + indent
-	# 	rBottom = rect.bottom + indent
-	# 	for line in range(self.allCellsInW):
-	# 		pygame.draw.line(self.block,
-	# 		                 (255, 255, 255),
-	# 		                 (rLeft + line * cellsSize, rTop),
-	# 		                 (rLeft + line * cellsSize, rBottom - indent*2),
-	# 		                 1)
-	#
-	# 	for line in range(self.allCellsInH):
-	# 		pygame.draw.line(self.block,
-	# 		                 (255, 255, 255),
-	# 		                 (rLeft, rTop + line * cellsSize),
-	# 		                 (rRight - indent*2, rTop + line * cellsSize),
-	# 		                 1)
 		
