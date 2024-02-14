@@ -1,0 +1,1 @@
+Test msg in git bash
